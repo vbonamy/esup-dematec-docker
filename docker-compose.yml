@@ -1,0 +1,28 @@
+version: '3'
+services:
+  database:
+    image: postgres:9.6-alpine
+    environment:
+      - POSTGRES_USER=esupdematec
+      - POSTGRES_PASSWORD=esup
+      - POSTGRES_DB=esupdematec
+    volumes:
+      - database:/var/lib/postgresql/data
+    networks:
+      backend:
+    restart: always
+
+  app:
+    image: vbonamy/esup-dematec:latest
+    ports:
+      - "8080:8080"
+    networks:
+      backend:
+    restart: always
+    depends_on:
+      - database
+
+networks:
+  backend:
+volumes:
+  database:
